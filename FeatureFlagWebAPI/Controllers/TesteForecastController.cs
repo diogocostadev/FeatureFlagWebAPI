@@ -1,32 +1,36 @@
+using C3i.GerenciadorFeatureFlags;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FeatureFlagWebAPI.Controllers;
-
 [ApiController]
-[Route("[controller]")]
-public class TesteForecastController : ControllerBase
+[Route("api/[controller]")]
+public class TesteController : ControllerBase
 {
-    private static readonly string[] Summaries = new[]
-    {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
+    private readonly AppSettingsFeatureFlagProvider _providerFeatureFlag;
 
-    private readonly ILogger<TesteForecastController> _logger;
-
-    public TesteForecastController(ILogger<TesteForecastController> logger)
+    public TesteController(AppSettingsFeatureFlagProvider providerFeatureFlag)
     {
-        _logger = logger;
+        _providerFeatureFlag = providerFeatureFlag;
     }
 
-    [HttpGet(Name = "GetWeatherForecast")]
-    public IEnumerable<WeatherForecast> Get()
+    [HttpGet("ativa")]
+    public IActionResult TesteFuncionalidadeAtiva()
     {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+        
+        if (_providerFeatureFlag.IsFeatureEnabled("FuncionalidadeAtiva"))
+        {
+            return Ok("A funcionalidade ativa está disponível!");
+        }
+        return NotFound("A funcionalidade ativa está desabilitada.");
+    }
+
+    [HttpGet("inativa")]
+    public IActionResult TesteFuncionalidadeInativa()
+    {
+        if (_providerFeatureFlag.IsFeatureEnabled("FuncionalidadeInativa"))
+        {
+            return Ok("A funcionalidade inativa está disponível!");
+        }
+        return NotFound("A funcionalidade inativa está desabilitada.");
     }
 }

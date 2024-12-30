@@ -1,6 +1,8 @@
 @FeatureFlagWebAPI_HostAddress = http://localhost:5299
 
-GET {{FeatureFlagWebAPI_HostAddress}}/weatherforecast/
+GET {{FeatureFlagWebAPI_HostAddress}}/api/Teste/ativa
 Accept: application/json
 
 ###
+GET {{FeatureFlagWebAPI_HostAddress}}/api/Teste/inativa
+Accept: application/json
