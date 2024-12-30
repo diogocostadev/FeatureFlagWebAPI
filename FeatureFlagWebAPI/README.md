@@ -10,7 +10,7 @@ Este projeto é um exemplo prático de uma aplicação Web API REST utilizando F
 ## Como Configurar
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/FeatureFlagWebAPI.git
+   git clone https://github.com/diogocostadev/FeatureFlagWebAPI.git
    cd FeatureFlagWebAPI
 
 	2.	Restaure os pacotes NuGet:
